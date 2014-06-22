@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-
 var script_list = loadModules;
 
 var base_dir = 'js';
@@ -15,40 +14,34 @@ var urls;
 
 
 function getSrc(inurl, task, cdnstatus) {
-        
-    if (task === 'cdn') {                                          /****Task 1 [Parse array, Decide CDN Check or Fallback]***/
+    if (task === 'cdn') {                                                  /****Task 1 [Parse array, Decide CDN Check or Fallback]***/
         //alert('cdn '+inurl+' came');
         var scripts_li = inurl;
         var i = window.script_index;
-        if (Array.isArray(scripts_li) === true) {                   //If given is array of url(s) for all scripts
-            
-        var scripts_li = inurl;
-        var i = window.script_index;
-                window.urls=scripts_li[i];                                     //
-                //Parse to single script url(s)
-                if(Array.isArray(window.urls) === true){                       //If the single script url(s) is having cdn with local fallback
-                    window.script_innr_indx = 0;
-                    var url = window.urls[window.script_innr_indx];
-                    checkCdn(url);
-
-                    
-                } else {
-                    if (window.script_index < window.script_list.length) {
-                        Windowload(window.urls, false);
-                        window.script_index++;
-                        getSrc(window.script_list, 'cdn');
-                    }
+        if (Array.isArray(scripts_li) === true) {                               //If given is array of url(s) for all scripts
+            var scripts_li = inurl;
+            var i = window.script_index;
+            window.urls = scripts_li[i];                                     
+            //Parse to single script url(s)
+            if (Array.isArray(window.urls) === true) {                          //If the single script url(s) is having cdn with local fallback
+                window.script_innr_indx = 0;
+                var url = window.urls[window.script_innr_indx];
+                checkCdn(url);
+            } else {
+                if (window.script_index < window.script_list.length) {
+                    Windowload(window.urls, false);
+                    window.script_index++;
+                    getSrc(window.script_list, 'cdn');
                 }
-            
-            
-        } else {                                                    //If given is array of window.urls for single script
+            }
+        } else {                                                                //If given is array of window.urls only for single script
             if (window.script_index < window.script_list.length) {
                 Windowload(scripts_li[i], false);
             }
         }
     }
-        
-    if (task === 'cdnstatus') {                                   /****Task 2 [Check CDN Status]***/
+
+    if (task === 'cdnstatus') {                                            /****Task 2 [Check CDN Status]***/
         if (cdnstatus === 200) {
             Windowload(inurl, true);
             window.script_index++;
@@ -59,7 +52,7 @@ function getSrc(inurl, task, cdnstatus) {
             if (window.script_innr_indx < window.urls.length - 1) {
                 window.script_innr_indx++;
                 checkCdn(window.urls[window.script_innr_indx]);
-            } else if (window.script_innr_indx === window.urls.length - 1){
+            } else if (window.script_innr_indx === window.urls.length - 1) {
                 Windowload(window.urls[window.script_innr_indx], false);
                 window.script_index++;
                 getSrc(window.script_list, 'cdn');
@@ -70,27 +63,27 @@ function getSrc(inurl, task, cdnstatus) {
 }
 
 
-function checkCdn(url) {                                        /****Ajax call***/
-    
-$.ajax({
+function checkCdn(url) {                                                   /****Ajax call***/
+
+    $.ajax({
         type: "HEAD",
         url: url,
         crossDomain: true,
         //timeout:3000,
         complete: function(e) {
-         getSrc(url, 'cdnstatus', e.status);
-         //salert('status '+e.status+' fired for '+url);
-        },
-        error: function(e) {            
-           // alert("some error, "+e.status);
             getSrc(url, 'cdnstatus', e.status);
-                           }
-        
+            //salert('status '+e.status+' fired for '+url);
+        },
+        error: function(e) {
+            // alert("some error, "+e.status);
+            getSrc(url, 'cdnstatus', e.status);
+        }
     });
-};
+}
+;
 
 
-function Windowload(appendurl, cdnchk) {
+function Windowload(appendurl, cdnchk) {                                   /****Create new script element***/
 
     var embedcode = document.createElement('script');
     embedcode.type = 'text/javascript';
@@ -104,7 +97,7 @@ function Windowload(appendurl, cdnchk) {
         else {
             embedcode.src = appendurl;
             //alert('cdn appended'+appendurl);
-            
+
             document.body.appendChild(embedcode);
         }
     }
@@ -119,7 +112,6 @@ window.onload = function(event) {
     event.stopPropagation(true);
     Windowload(window.script_list, true);
 };
-
 
 
 

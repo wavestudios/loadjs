@@ -24,7 +24,7 @@ Example:
 var base_dir = 'js';
 ```
 
-- List all the modules required as an array and assign it to `loadModules` variable.
+- List all the modules required relative to basepath as an array and assign it to `loadModules` variable.
  
 Example: 
 

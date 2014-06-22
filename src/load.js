@@ -8,7 +8,6 @@
 
 var script_list = loadModules;
 
-var base_dir = 'js';
 var ajaxrtn = false;
 var script_index;
 var script_innr_indx;

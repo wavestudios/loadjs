@@ -1,8 +1,10 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/** 
+ *  LoadJS - A tiny javascript loader
+ *  Description : LoadJS is a lightweight javascript module loader.
+ *  Ver         : 1.0 (Beta)
+ *  Auther      : Wave Studios
+ *  License     : MIT
+**/
 
 var script_list = loadModules;
 

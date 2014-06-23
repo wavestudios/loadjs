@@ -5,7 +5,6 @@
  *  Auther      : Wave Studios
  *  License     : MIT
 **/
-
 var script_list = loadModules;
 
 var ajaxrtn = false;
